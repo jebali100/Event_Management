@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="css/register.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/footer.css">
+
+    <script src="js/register.js"></script>
+
 </head>
 <body>
 <?php include 'navbar.php'; ?>
@@ -21,18 +24,17 @@ $message = '';
 
 if (isset($_POST['register'])) {
     $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
     $email = $_POST['email'];
+    $telephone = $_POST['telephone'];
     $mot_de_passe = $_POST['mot_de_passe'];
-    $confirmation = $_POST['confirmation'];
-    if ($mot_de_passe !== $confirmation) {
-        $error = 'Les mots de passe ne correspondent pas.';
-    } elseif ($participant->register($nom, $prenom, $email, $mot_de_passe)) {
+
+    if ($participant->register($nom, $email, $telephone, $mot_de_passe)) {
         $message = '<div class="alert alert-success">Inscription réussie ! Connectez-vous.</div>';
     } else {
         $error = 'Erreur lors de l\'inscription.';
     }
 }
+
 ?>
 
 <div class="register-container">
@@ -42,21 +44,19 @@ if (isset($_POST['register'])) {
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
         <?php echo $message; ?>
-        <form method="POST" action="">
+        <form method="POST" action="" id="registerForm">
             <div class="form-group">
-                <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
+                <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom">
+            </div>
+            
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" required>
+                <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" placeholder="Mot de passe">
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" placeholder="Mot de passe" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="confirmation" name="confirmation" placeholder="Confirmation du mot de passe" required>
+                <input type="number" class="form-control" id="telephone" name="telephone" placeholder="numéro du téléphone">
             </div>
             <button type="submit" name="register" class="btn btn-custom register-button">S'inscrire</button>
         </form>
